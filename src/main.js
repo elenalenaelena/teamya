@@ -20,6 +20,7 @@ export const settings = reactive({
 
 const colors = {
   primary: '#2196F3',
+  'primary-lighten-1': '#70BFFF',
   'primary-darken-1': '#196DB3',
   'primary-darken-2': '#104673',
   secondary: '#03DAC6',
