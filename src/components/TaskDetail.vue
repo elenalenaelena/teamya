@@ -30,7 +30,6 @@ export default {
     const route = useRoute();   
     this.taskId = JSON.parse(route.params.id);  
     this.task = this.getTaskById(JSON.parse(this.taskId))
-    console.log(this.task)
   },
 }
 </script>
@@ -53,7 +52,7 @@ export default {
     <!-- START COLUMN 2/3 (content) -->
     <v-col sm="12" md="8">
 
-      <h2>Fehler an "{{ this.task.module }}"</h2>  
+      <h2>Fehlerhaftes Produkt am Modul "{{ this.task.module }}"</h2>  
       <br>
       <p>{{ this.task.description }}</p>
       <br>
@@ -143,20 +142,10 @@ export default {
 
         </v-col>
       </v-row>
-      
-      <!-- <v-row>   
-        <v-col>       
-        <v-textarea 
-              name="input-3-1" 
-              label="Kommentar" 
-              value="" 
-          ></v-textarea>   
-        </v-col> 
-      </v-row> -->
 
       <v-row>
         <v-col> 
-          <v-btn color="primary">
+          <v-btn color="primary-darken-1">
             senden
           </v-btn>
         </v-col> 
@@ -175,8 +164,15 @@ export default {
       <p>Status: {{ this.task.status }}</p>
       <br>
       <h4>Bearbeiter</h4>
-      <p>{{ this.task.assignedTo }}</p>   
-      <br>
+      
+      <v-avatar v-if="this.task.assignedTo=='David Heik'" class="avatar" color="pink" variant="tonal">
+            <span >DH</span>            
+          </v-avatar>
+          <v-avatar v-else class="avatar" color="primary" variant="tonal">
+            <span >ES</span>            
+          </v-avatar>&nbsp;
+       <span>{{ this.task.assignedTo }}</span>
+      <br><br>
       <h4>Historie</h4>
       <p> - </p>
  

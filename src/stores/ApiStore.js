@@ -21,12 +21,20 @@ export const useApiStore = defineStore('ApiStore', {
         return state.apiData.tasks
       },
       getTaskById(state) {
-        return (i) => state.apiData.tasks.find( x => x.id === i)
-    
+        return (i) => state.apiData.tasks.find( x => x.id === i)    
+      },
+      getTasksByUser(state) {
+        let t=[]
+
+        try {
+          t=state.apiData.tasks.filter( x => x.assignedTo == "David Heik")    
+        } catch(error) {
+          console.log(error)
+        }
+        return t   
       },
       getCurrTask(state) {
-        return state.apiData.tasks.find( x => x.id === 3)
-    
+        return state.apiData.tasks.find( x => x.id === 3)    
       }
     },
 

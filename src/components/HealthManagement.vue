@@ -32,6 +32,7 @@ export default {
     </v-col>
   </v-row>
 </v-container>
+
 </template>
 
 <style scoped>

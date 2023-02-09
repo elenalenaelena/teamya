@@ -59,6 +59,7 @@ export default {
     
   <v-row class="justify-center">  
     <v-col xs="12" md="6" lg="2">
+      
       <v-switch 
         @click="toggleTheme" 
         color="primary" 

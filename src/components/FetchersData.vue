@@ -54,7 +54,7 @@ methods: {
                 assignedTo: assignee,
                 status: "offen",
                 module: "Kamera-Station",
-                description: "Ein fehlerhaftes Produkt wurde erkannt. Bitte Ursache prüfen und Produkt weiterleiten.",               
+                description: "Bitte prüfen Sie die Ursache und geben Sie an, wohin das Produkt weitergeleitet werden soll.",               
                 comments: []                
                 } 
             }      

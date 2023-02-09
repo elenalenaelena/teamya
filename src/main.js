@@ -24,7 +24,7 @@ const colors = {
   'primary-darken-1': '#196DB3',
   'primary-darken-2': '#104673',
   secondary: '#03DAC6',
-  'secondary-darken-1': '#018786',
+  'secondary-darken-1': '#018786'
 }
 
 const vuetify = createVuetify({
