@@ -49,7 +49,6 @@ export const useApiStore = defineStore('ApiStore', {
       },
       setCurrTask(state) {
         try {
-          //this.currTask = (taskId) => state.apiData.tasks.find((task) => task.id === taskId)
           (task) => state.currTask = task
         } catch (error) {        
           //console.log(error);

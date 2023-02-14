@@ -10,14 +10,20 @@ export default {
         taskId: null,
         task: {},
         checkboxes: [],
-        enabled: false,
-        selected: ['John'],
+        error: true,
+        selected: [],
         radioGroup: "1",
-        data: null
+        data: null,
+        myImage: require('@/assets/images/carrier_12.jpg')
     }
   },
   methods: {
-    methodName () {},
+    updateTask () {
+
+    },
+    getImgUrl(pic) {
+        return require('@/assets/images/carrier_'+pic+'.jpg')
+    }
   },  
   setup() {
     const store = useApiStore()
@@ -27,6 +33,7 @@ export default {
     }
   },
   async mounted () {
+    //get task data by ID
     const route = useRoute();   
     this.taskId = JSON.parse(route.params.id);  
     this.task = this.getTaskById(JSON.parse(this.taskId))
@@ -50,70 +57,84 @@ export default {
 
 
     <!-- START COLUMN 2/3 (content) -->
-    <v-col sm="12" md="8">
+    <v-col sm="12" md="7">
 
       <h2>Fehlerhaftes Produkt am Modul "{{ this.task.module }}"</h2>  
       <br>
-      <p>{{ this.task.description }}</p>
+      <p>{{ this.task.error }}</p>
       <br>
+
 
       <v-row>
         <v-col xs="12" md="8"> 
 
-          <div class="error-image svg-container" :style="{backgroundImage:'url(https://images.unsplash.com/photo-1555589228-5dc844368071?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bWFpbmJvYXJkfGVufDB8fDB8fA==&auto=format&fit=crop&w=800&q=60)'}">
-              <svg class="svg-content">
-              <g>
-                <title>Carrier</title>
-                <rect stroke="#000000" stroke-width="2" fill="none" x="0" y="0" width="" height="" viewBox="0 0 800 600" id="rectangle_svg"/>
-              </g>
-            </svg>
-          </div>              
-          <!-- <v-img
-            src="https://images.unsplash.com/photo-1555589228-5dc844368071?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bWFpbmJvYXJkfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
-            cover
-          ></v-img> -->
+          <v-img 
+              :src="this.myImage"  
+              cover
+          ></v-img>     
+          <img :src="getImgUrl(12)" v-bind:alt="pic"/>     
 
         </v-col>
 
         <v-col xs="12" md="4">         
 
-          <v-checkbox-group>          
-              <h4>Ursache</h4>
-              <v-checkbox 
+          <v-checkbox-btn-group>     
+            <br>
+            <h4>Fehlerursache</h4> 
+              <v-checkbox-btn
                   v-model="selected"
-                  label="beschmutzt/beschädigt"
-                  value="error-1"
-              ></v-checkbox>
-              <v-checkbox 
+                  label="ohne Fehler"
+                  value=0
+                  density="comfortable"
+              ></v-checkbox-btn><br>     
+              <v-checkbox-btn
                   v-model="selected"
-                  label="verdreht"
-                  value="error-2"
-              ></v-checkbox>
-              <v-checkbox
+                  label="Material falsch (Sicherung links)"
+                  value=1
+                  density="comfortable"
+              ></v-checkbox-btn><br>
+              <v-checkbox-btn
                   v-model="selected"
-                  label="fehlt"
-                  value="error-3"
-              ></v-checkbox>
-              <v-checkbox
+                  label="Material falsch (Sicherung rechts)"
+                  value=2
+                  density="comfortable"
+              ></v-checkbox-btn><br>
+              <v-checkbox-btn 
                   v-model="selected"
-                  label="Material falsch"
-                  value="error-4"
-              ></v-checkbox>          
-              <v-checkbox
-                v-model="enabled"
-                label="Sonstiges"
-                value="error-5"
-              ></v-checkbox>
-              <v-text-field
-                :disabled="!enabled"
-                hide-details
-                label="Sonstiges"
-              ></v-text-field>
-      
-          </v-checkbox-group>  
+                  label="Material falsch (beide Sicherungen)"
+                  value=3
+                  density="comfortable"
+              ></v-checkbox-btn><br>
+              <v-checkbox-btn
+                  v-model="selected"
+                  label="Platine verschmutzt / beschädigt"
+                  value=4
+                  density="comfortable"
+              ></v-checkbox-btn><br> 
+              <v-checkbox-btn
+                  v-model="selected"
+                  label="Platine 180° verdreht"
+                  value=5
+                  density="comfortable"
+              ></v-checkbox-btn><br>  
+              <div class="d-flex" >           
+                <v-checkbox-btn
+                  v-model="selected"
+                  value=6
+                  density="comfortable"
+                ></v-checkbox-btn>
+                <v-text-field
+                  label="Sonstiges"
+                  hide-details
+                  density="comfortable"
+                  underlined
+                ></v-text-field>
+              </div> 
+          </v-checkbox-btn-group>  
 
-        </v-col>        
+        </v-col>     
       </v-row>
+
 
       <v-row>
         <v-col>
@@ -142,6 +163,7 @@ export default {
 
         </v-col>
       </v-row>
+      <br>
 
       <v-row>
         <v-col> 
@@ -156,7 +178,7 @@ export default {
 
 
     <!-- START COLUMN 3/3 (meta) -->
-    <v-col xs="12" md="2">
+    <v-col xs="12" md="2 offset-1">
           
       <h4>Aufgabe</h4>       
       <p>{{ this.task.createdAt }}</p>      

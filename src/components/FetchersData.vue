@@ -34,7 +34,8 @@ methods: {
         // check no of tasks
         let no_tasks = this.data.tasks.length;  
         let dateTime = this.getDateTime();
-        let assignee = this.getAvailableUser();        
+        let assignee = this.getAvailableUser();  
+        let errorImg = this.getError();      
         
         if (no_tasks < 8 ){
             
@@ -50,12 +51,15 @@ methods: {
             id: this.id++, 
             data: {
                 id: this.id, 
-                createdAt: dateTime,
                 assignedTo: assignee,
-                status: "offen",
-                module: "Kamera-Station",
+                comments: [],
+                createdAt: dateTime,
                 description: "Bitte prüfen Sie die Ursache und geben Sie an, wohin das Produkt weitergeleitet werden soll.",               
-                comments: []                
+                errorImg: errorImg,
+                errors: [],
+                forwardTo: "",
+                module: "Kamera-Station",                
+                status: "offen"            
                 } 
             }      
 
@@ -76,15 +80,20 @@ methods: {
 
     },
     getDateTime() {
-                const options = {
-                year: 'numeric',
-                month: 'long',
-                day: '2-digit',
-                hour: 'numeric',
-                minute: 'numeric',
-                second: 'numeric'
-                }
-                return new Intl.DateTimeFormat('de-DE', options).format(Date.now());
+        const options = {
+        year: 'numeric',
+        month: 'long',
+        day: '2-digit',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+        }
+        return new Intl.DateTimeFormat('de-DE', options).format(Date.now());
+    },
+    getError() {
+        let err = [12, 13, 14]
+        let x = err[Math.floor(Math.random()* err.length)]
+        return x
     },
     getAvailableUser(){    
         let assignee = "-";

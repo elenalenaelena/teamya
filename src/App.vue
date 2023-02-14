@@ -33,7 +33,7 @@ export default {
 <v-app>
 
   <!-- Must have the app property -->
-  <v-app-bar app title=" " color="primary">     
+  <v-app-bar app title=" " color="primary">   
 
     <v-btn to="/tasks" stacked>
       <!-- <v-badge color="warning" :content=this.no_tasks > -->
