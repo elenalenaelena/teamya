@@ -70,75 +70,99 @@
   "tasks": [
     {
       "id": 7,
-      "createdAt": "09. Februar 2023 um 10:30:17",
-      "assignedTo": "Elena Stoll",
-      "status": "offen",
+      "assignedTo": "David Heik",
+      "comments": [],
+      "createdAt": "15. Februar 2023 um 12:48:09",
+      "description": "Bitte prüfen Sie die Ursache und leiten Sie das Produkt weiter.",
+      "errorImg": 12,
+      "errors": [],
+      "forwardTo": "",
       "module": "Kamera-Station",
-      "description": "Bitte prüfen Sie die Ursache und geben Sie an, wohin das Produkt weitergeleitet werden soll.",
-      "comments": []
+      "status": "offen"
     },
     {
       "id": 6,
-      "createdAt": "09. Februar 2023 um 10:29:44",
-      "assignedTo": "David Heik",
-      "status": "offen",
+      "assignedTo": "Elena Stoll",
+      "comments": [],
+      "createdAt": "15. Februar 2023 um 12:47:46",
+      "description": "Bitte prüfen Sie die Ursache und leiten Sie das Produkt weiter.",
+      "errorImg": 14,
+      "errors": [],
+      "forwardTo": "",
       "module": "Kamera-Station",
-      "description": "Bitte prüfen Sie die Ursache und geben Sie an, wohin das Produkt weitergeleitet werden soll.",
-      "comments": []
+      "status": "offen"
     },
     {
       "id": 5,
-      "createdAt": "09. Februar 2023 um 10:29:20",
       "assignedTo": "David Heik",
-      "status": "offen",
+      "comments": [],
+      "createdAt": "15. Februar 2023 um 12:47:07",
+      "description": "Bitte prüfen Sie die Ursache und leiten Sie das Produkt weiter.",
+      "errorImg": 12,
+      "errors": [],
+      "forwardTo": "",
       "module": "Kamera-Station",
-      "description": "Bitte prüfen Sie die Ursache und geben Sie an, wohin das Produkt weitergeleitet werden soll.",
-      "comments": []
+      "status": "offen"
     },
     {
       "id": 4,
-      "createdAt": "09. Februar 2023 um 10:28:51",
-      "assignedTo": "Elena Stoll",
-      "status": "offen",
+      "assignedTo": "David Heik",
+      "comments": [],
+      "createdAt": "15. Februar 2023 um 12:46:36",
+      "description": "Bitte prüfen Sie die Ursache und leiten Sie das Produkt weiter.",
+      "errorImg": 13,
+      "errors": [],
+      "forwardTo": "",
       "module": "Kamera-Station",
-      "description": "Bitte prüfen Sie die Ursache und geben Sie an, wohin das Produkt weitergeleitet werden soll.",
-      "comments": []
+      "status": "offen"
     },
     {
       "id": 3,
-      "createdAt": "09. Februar 2023 um 10:28:28",
-      "assignedTo": "David Heik",
-      "status": "offen",
+      "assignedTo": "Elena Stoll",
+      "comments": [],
+      "createdAt": "15. Februar 2023 um 12:46:04",
+      "description": "Bitte prüfen Sie die Ursache und leiten Sie das Produkt weiter.",
+      "errorImg": 13,
+      "errors": [],
+      "forwardTo": "",
       "module": "Kamera-Station",
-      "description": "Bitte prüfen Sie die Ursache und geben Sie an, wohin das Produkt weitergeleitet werden soll.",
-      "comments": []
+      "status": "offen"
     },
     {
       "id": 2,
-      "createdAt": "09. Februar 2023 um 10:27:52",
       "assignedTo": "David Heik",
-      "status": "offen",
+      "comments": [],
+      "createdAt": "15. Februar 2023 um 12:34:03",
+      "description": "Bitte prüfen Sie die Ursache und leiten Sie das Produkt weiter.",
+      "errorImg": 13,
+      "errors": [],
+      "forwardTo": "",
       "module": "Kamera-Station",
-      "description": "Bitte prüfen Sie die Ursache und geben Sie an, wohin das Produkt weitergeleitet werden soll.",
-      "comments": []
+      "status": "offen"
     },
     {
       "id": 1,
-      "createdAt": "09. Februar 2023 um 10:27:32",
       "assignedTo": "David Heik",
-      "status": "offen",
+      "comments": [],
+      "createdAt": "15. Februar 2023 um 12:33:27",
+      "description": "Bitte prüfen Sie die Ursache und leiten Sie das Produkt weiter.",
+      "errorImg": 13,
+      "errors": [],
+      "forwardTo": "",
       "module": "Kamera-Station",
-      "description": "Bitte prüfen Sie die Ursache und geben Sie an, wohin das Produkt weitergeleitet werden soll.",
-      "comments": []
+      "status": "offen"
     },
     {
       "id": 8,
-      "createdAt": "09. Februar 2023 um 10:30:40",
       "assignedTo": "Elena Stoll",
-      "status": "offen",
+      "comments": [],
+      "createdAt": "15. Februar 2023 um 12:48:46",
+      "description": "Bitte prüfen Sie die Ursache und leiten Sie das Produkt weiter.",
+      "errorImg": 14,
+      "errors": [],
+      "forwardTo": "",
       "module": "Kamera-Station",
-      "description": "Bitte prüfen Sie die Ursache und geben Sie an, wohin das Produkt weitergeleitet werden soll.",
-      "comments": []
+      "status": "offen"
     }
   ],
   "posts": []

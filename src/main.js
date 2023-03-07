@@ -15,7 +15,8 @@ const pinia = createPinia();
 const app = createApp(App)
 
 export const settings = reactive({
-  soundAlert: true
+  soundAlert: true,
+  healthConnected: false
 })
 
 const colors = {

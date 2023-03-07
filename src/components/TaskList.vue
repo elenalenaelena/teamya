@@ -27,11 +27,8 @@ export default {
     }
   },
   async mounted () {
-      this.tasks = this.getTasks
-      this.tasksByUser = this.getTasksByUser
-
-      console.log(this.tasks)
-      console.log(this.tasksByUser)
+      this.tasks = this.getTasks;
+      this.tasksByUser = this.getTasksByUser;
   },
 }
 </script>
@@ -47,16 +44,37 @@ export default {
       <v-expansion-panel v-for="task in this.tasksByUser" :key="task.id">
         
         <v-expansion-panel-title expand-icon="mdi-plus" collapse-icon="mdi-minus">   
-          <span>{{ task.createdAt }}</span>
-          <span class="offset-1"> Prüfung fehlerhaftes Produkt</span>       
-          <span class="offset-2">Status: <v-btn variant="plain">{{ task.status }}</v-btn></span>
-          <v-avatar color="pink" variant="tonal">
-            <span>DH</span>            
-          </v-avatar>
-
-          <v-btn class="offset-1" color="primary-darken-1" small :to="{ name: 'TaskDetail', params: { id: task.id } }">
-            bearbeiten
-          </v-btn>
+          <v-row no-gutters>
+            <v-col md="3">
+              <span>{{ task.createdAt }}</span>
+            </v-col>
+            <v-col md="3"> 
+              <span class="offset-1">
+                Prüfung fehlerhaftes Produkt
+              </span> 
+            </v-col>
+            <v-col md="3"> 
+              <span class="offset-2">
+                Status: 
+                <v-btn variant="plain">{{ task.status }}</v-btn>
+              </span>
+            </v-col>
+            <v-col md="1">
+              <v-avatar color="pink" variant="tonal">
+                <span>
+                  DH
+                </span>            
+              </v-avatar>
+            </v-col>
+            <v-col md="2">
+              <v-btn v-if="task.status=='!erledigt'" class="offset-1" color="primary-darken-1" small :to="{ name: 'TaskDetail', params: { id: task.id } }">
+                bearbeiten
+              </v-btn>
+              <v-btn v-else class="offset-1" color="plain" small :to="{ name: 'TaskDetail', params: { id: task.id } }">
+                ansehen
+              </v-btn>
+            </v-col>
+          </v-row>   
         </v-expansion-panel-title>
       
         <v-expansion-panel-text>
@@ -80,21 +98,39 @@ export default {
     <v-expansion-panels class="mb-6">  
       <v-expansion-panel v-for="task in this.tasks" :key="task.id">
         
-        <v-expansion-panel-title expand-icon="mdi-plus" collapse-icon="mdi-minus">   
-          <span>{{ task.createdAt }}</span>
-          <span class="offset-1"> Prüfung fehlerhaftes Produkt</span>       
-          <span class="offset-2">Status: <v-btn variant="plain">{{ task.status }}</v-btn></span>
-
-          <v-avatar v-if="task.assignedTo=='David Heik'" class="avatar" color="pink" variant="tonal">
-            <span >DH</span>            
-          </v-avatar>
-          <v-avatar v-else class="avatar" color="primary" variant="tonal">
-            <span >ES</span>            
-          </v-avatar>
-
-           <v-btn class="offset-1" color="primary-darken-1" small :to="{ name: 'TaskDetail', params: { id: task.id } }">
-            bearbeiten
-          </v-btn>
+        <v-expansion-panel-title expand-icon="mdi-plus" collapse-icon="mdi-minus">
+          <v-row no-gutters>
+            <v-col md="3">
+              <span>{{ task.createdAt }}</span>
+            </v-col>
+            <v-col md="3"> 
+              <span class="offset-1">
+                Prüfung fehlerhaftes Produkt
+              </span> 
+            </v-col>
+            <v-col md="3"> 
+              <span class="offset-2">
+                Status: 
+                <v-btn variant="plain">{{ task.status }}</v-btn>
+              </span>
+            </v-col>
+            <v-col md="1">
+              <v-avatar v-if="task.assignedTo=='David Heik'" class="avatar" color="pink" variant="tonal">
+                <span >DH</span>            
+              </v-avatar>
+              <v-avatar v-else class="avatar" color="primary" variant="tonal">
+                <span >ES</span>            
+              </v-avatar>
+            </v-col>
+            <v-col md="2">
+              <v-btn v-if="task.assignedTo=='David Heik' && task.status!='erledigt'" class="offset-1" color="primary-darken-1" small :to="{ name: 'TaskDetail', params: { id: task.id } }">
+                bearbeiten
+              </v-btn>
+              <v-btn v-else class="offset-1" color="plain" small :to="{ name: 'TaskDetail', params: { id: task.id } }">
+                ansehen
+              </v-btn>
+            </v-col>
+          </v-row>      
         </v-expansion-panel-title>
       
         <v-expansion-panel-text>
@@ -113,5 +149,4 @@ export default {
 </template>
 
 <style>
-
 </style>

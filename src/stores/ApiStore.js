@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-//import products from "@/data/products.json"
 
 export const useApiStore = defineStore('ApiStore', {
 
@@ -20,8 +19,10 @@ export const useApiStore = defineStore('ApiStore', {
       getTasks(state) {
         return state.apiData.tasks
       },
-      getTaskById(state) {
-        return (i) => state.apiData.tasks.find( x => x.id === i)    
+      getTaskById(state) {        
+        if(state.apiData.tasks) {
+          return (i) => state.apiData.tasks.find( x => x.id === i)         
+        }        
       },
       getTasksByUser(state) {
         let t=[]
@@ -33,9 +34,6 @@ export const useApiStore = defineStore('ApiStore', {
         }
         return t   
       },
-      getCurrTask(state) {
-        return state.apiData.tasks.find( x => x.id === 3)    
-      }
     },
 
 // actions = modifying data in a store (can be async)
@@ -51,10 +49,19 @@ export const useApiStore = defineStore('ApiStore', {
         try {
           (task) => state.currTask = task
         } catch (error) {        
-          //console.log(error);
+          console.log(error);
         }  
-      }
-      //updateTask(id)
-      //deleteTask
+      },
+      pushTask(obj) {
+        const index = this.apiData.tasks.findIndex((e) => e.id === obj.id);
+    
+        if (index === -1) {
+          this.apiData.tasks.push(obj); // add
+        } else {
+          this.apiData.tasks[index] = obj; // modify
+        }
+        console.log(obj)
+    }
+    //deleteTask
     }
   })

@@ -9,6 +9,7 @@ export default {
     return {
       darkMode: null,
       soundAlert: null,
+      healthConnected: null,
       settings
     }
   },
@@ -38,7 +39,17 @@ export default {
           this.playSound();
         } 
 
-    }
+    },
+    toggleHealth () {
+
+      settings.healthConnected = !settings.healthConnected;
+      this.healthConnected = settings.healthConnected;
+
+      if(settings.soundAlert) {
+        this.playSound();
+      } 
+
+      }
   },
   mounted (){
 
@@ -67,7 +78,8 @@ export default {
         label="Dark Mode">
         <template v-slot:label>      
           Dark Mode&nbsp;
-          <v-icon icon="mdi-moon-waning-crescent" class="rotate-20 smaller"></v-icon>            
+          <v-icon v-if="this.darkMode" icon="mdi-moon-waning-crescent" class="rotate-20 smaller"></v-icon>         
+          <v-icon v-else icon="mdi-weather-sunny" class="smaller"></v-icon>     
         </template>
       </v-switch>
     </v-col>
@@ -88,6 +100,22 @@ export default {
       </v-switch>
     </v-col>  
   </v-row>
+
+  <!-- <v-row class="justify-center">
+    <v-col xs="12" md="6" lg="2">
+      <v-switch 
+        @click="this.toggleHealth" 
+        color="primary" 
+        v-model="healthConnected"
+        label="">
+        <template v-slot:label>      
+          Smartwatch&nbsp;
+          <v-icon v-if="this.healthConnected" icon="mdi-watch-vibrate" class="smaller"></v-icon>
+          <v-icon v-else icon="mdi-watch-vibrate-off" class="smaller"></v-icon>            
+        </template>
+      </v-switch>
+    </v-col>  
+  </v-row> -->
 
 </v-container>
 

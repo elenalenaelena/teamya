@@ -15,6 +15,7 @@ export default {
       prominent 
       type="info" 
       title="Keine aktuellen Benachrichtigungen"
+      closable
   >
       <v-btn to="/tasks">
         zur Aufgabenübersicht

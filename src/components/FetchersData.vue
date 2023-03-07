@@ -18,6 +18,12 @@ data() {
     settings
     }
 },
+watch: {
+    useApiStore: function(value) {
+            // If "pageData" ever changes, then we will console log its new value.
+            console.log(value);
+    }
+},
 components: {
     TaskNotification,
     NoTaskNotification
@@ -32,12 +38,13 @@ methods: {
     createTask(){         
 
         // check no of tasks
-        let no_tasks = this.data.tasks.length;  
-        let dateTime = this.getDateTime();
-        let assignee = this.getAvailableUser();  
-        let errorImg = this.getError();      
+        let no_tasks = this.data.tasks.length;     
         
         if (no_tasks < 8 ){
+
+            let dateTime = this.getDateTime();
+            let assignee = this.getAvailableUser();  
+            let errorImg = this.getError();   
             
             if(no_tasks == 0)
                this.id = 0;
@@ -54,7 +61,7 @@ methods: {
                 assignedTo: assignee,
                 comments: [],
                 createdAt: dateTime,
-                description: "Bitte prüfen Sie die Ursache und geben Sie an, wohin das Produkt weitergeleitet werden soll.",               
+                description: "Bitte prüfen Sie die Ursache und leiten Sie das Produkt weiter.",               
                 errorImg: errorImg,
                 errors: [],
                 forwardTo: "",
@@ -112,6 +119,21 @@ methods: {
     playSound (){
       const sound = ( new Audio( require('@/assets/ping.mp3')))
       sound.play();
+    },
+    updateTask(t){
+
+        console.log('updated task via API')
+
+        this.task = {
+            type: 'update', 
+            path: 'tasks', 
+            id: t.id, 
+            data: t
+        }     
+
+        //send to socket
+        this.exampleSocket.send(JSON.stringify(this.task));   
+
     }
 },
 async created() {

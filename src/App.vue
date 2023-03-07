@@ -53,6 +53,14 @@ export default {
       Settings
     </v-btn>
 
+    <v-btn stacked>
+    <v-avatar color="pink">
+      <span>
+        DH
+      </span>            
+    </v-avatar>
+  </v-btn>
+
     <!-- comments in for development of authentication feature -->
     <!-- <v-btn to="/login" stacked variant="tonal">
       <v-icon icon="mdi-login"></v-icon>
