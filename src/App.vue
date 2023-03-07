@@ -13,6 +13,11 @@ export default {
       no_tasks: 9
     }
   },
+  computed: {
+  isDetailPage() {
+    console.log("hide arrow")
+     return this.$route.name == 'TaskDetail'}
+  },
   methods: {
     updateTaskBadge(value){
       this.no_tasks=value;
@@ -33,7 +38,12 @@ export default {
 <v-app>
 
   <!-- Must have the app property -->
-  <v-app-bar app title=" " color="primary">   
+  <v-app-bar app title="" color="primary">   
+
+    <v-btn v-if="isDetailPage" to="/tasks" class="ma-2 me-auto" size="x-large">
+        <v-icon>mdi-arrow-left</v-icon>
+    </v-btn>
+    <v-spacer v-else class="ma-2 me-auto"></v-spacer>   
 
     <v-btn to="/tasks" stacked>
       <!-- <v-badge color="warning" :content=this.no_tasks > -->
@@ -85,5 +95,4 @@ export default {
   color: #2c3e50;
   margin: 10px;
 }
-
 </style>

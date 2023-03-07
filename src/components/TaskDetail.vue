@@ -64,17 +64,8 @@ export default {
 
   <v-row>
 
-    <!-- START COLUMN 1/3 (back navigation) -->
-    <v-col sm="12" md="2">
-      <v-btn to="/tasks">
-        <v-icon >mdi-arrow-left</v-icon>
-      </v-btn>
-    </v-col>
-    <!-- END COLUMN 1/3 -->
-
-
-    <!-- START COLUMN 2/3 (content) -->
-    <v-col sm="12" md="7">
+    <!-- START COLUMN 1/2 (content) -->
+    <v-col sm="12" md="9">
 
       <h2>Fehlerhaftes Produkt am Modul "{{ this.task.module }}"</h2>  
       <br>
@@ -129,21 +120,6 @@ export default {
                   value=5
                   density="comfortable"
               ></v-checkbox-btn><br>  
-              <!-- <div class="d-flex" >           
-                <v-checkbox-btn
-                  v-model="errors"
-                  label="Sonstiges"
-                  value=6
-                  density="comfortable"
-                ></v-checkbox-btn>
-                <v-text-field
-                  label="Sonstiges"
-                  hide-details
-                  density="comfortable"
-                  underlined
-                  clearable
-                ></v-text-field>
-              </div>  -->
           </v-checkbox-btn-group>  
 
         </v-col>     
@@ -208,10 +184,10 @@ export default {
       </v-row>       
 
     </v-col>
-    <!-- END COLUMN 2/3 -->
+    <!-- END COLUMN 1/2 -->
 
 
-    <!-- START COLUMN 3/3 (meta) -->
+    <!-- START COLUMN 2/2 (meta) -->
     <v-col xs="12" md="2 offset-1">
           
       <h4>Aufgabe</h4>       
@@ -233,12 +209,9 @@ export default {
         <span >ES</span>            
       </v-avatar>&nbsp;
        <span>{{ this.task.assignedTo }}</span>
-      <!-- <br><br>
-      <h4>Historie</h4>
-      <p> - </p> -->
  
     </v-col>
-    <!-- END COLUMN 3/3 -->
+    <!-- END COLUMN 2/2 -->
       
   </v-row> 
 

@@ -6,7 +6,8 @@ export default {
   data() {
     return {
       tasks: {},
-      tasksByUser: []  
+      tasksByUser: [],
+      page: 1  
     }
   },
   props: {
@@ -35,7 +36,9 @@ export default {
 
 <template>
 
-<v-container>
+
+
+<v-container fluid>
 
   <v-row no-gutters>
     <h3>Meine Aufgaben</h3>
@@ -129,6 +132,7 @@ export default {
               <v-btn v-else class="offset-1" color="plain" small :to="{ name: 'TaskDetail', params: { id: task.id } }">
                 ansehen
               </v-btn>
+              
             </v-col>
           </v-row>      
         </v-expansion-panel-title>
