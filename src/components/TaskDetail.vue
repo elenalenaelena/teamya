@@ -9,9 +9,11 @@ export default {
     return {
         taskId: null,
         task: {},
+        errorImg: 12,
         errors: [],
         forwardTo: "",
-        snackbar: false
+        snackbar: false,
+        overlay: false
     }
   },
   methods: {
@@ -36,8 +38,9 @@ export default {
           this.task.status = 'offen';
       }
     },
-    getImgPath(pic) {
-        return require('@/assets/images/carrier_'+pic+'.jpg')
+    getImgPath() {
+
+        return require('@/assets/images/carrier_'+this.errorImg+'.jpg')
     }
   },  
   setup() {
@@ -54,6 +57,7 @@ export default {
     const route = useRoute();   
     this.taskId = JSON.parse(route.params.id);  
     this.task = this.getTaskById(JSON.parse(this.taskId))
+    this.errorImg = this.task.errorImg
   },
 }
 </script>
@@ -62,110 +66,77 @@ export default {
 
 <v-container fluid>
 
-  <v-row>
-
-    <!-- START COLUMN 1/2 (content) -->
-    <v-col sm="12" md="9">
-
-      <h2>Fehlerhaftes Produkt am Modul "{{ this.task.module }}"</h2>  
-      <br>
-      <p v-if="task.assignedTo=='David Heik' && task.status!='erledigt'">{{ this.task.description }}</p>
-      <br>
-
-      <v-row>
-        <v-col xs="12" md="6"> 
-   
-          <v-img :src="getImgPath(12)"></v-img>     
-
-        </v-col>
-
-        <v-col xs="12" md="6">
- 
-          <v-checkbox-btn-group>     
-            <br>
-            <h4>Fehlerursache</h4> 
-              <v-checkbox-btn
-                  v-model="errors"
-                  label="ohne Fehler"
-                  value=0
-                  density="comfortable"
-              ></v-checkbox-btn><br>     
-              <v-checkbox-btn
-                  v-model="errors"
-                  label="Material falsch (Sicherung links)"
-                  value=1
-                  density="comfortable"
-              ></v-checkbox-btn><br>
-              <v-checkbox-btn
-                  v-model="errors"
-                  label="Material falsch (Sicherung rechts)"
-                  value=2
-                  density="comfortable"
-              ></v-checkbox-btn><br>
-              <v-checkbox-btn 
-                  v-model="errors"
-                  label="Material falsch (beide Sicherungen)"
-                  value=3
-                  density="comfortable"
-              ></v-checkbox-btn><br>
-              <v-checkbox-btn
-                  v-model="errors"
-                  label="Platine verschmutzt / beschädigt"
-                  value=4
-                  density="comfortable"
-              ></v-checkbox-btn><br> 
-              <v-checkbox-btn
-                  v-model="errors"
-                  label="Platine 180° verdreht"
-                  value=5
-                  density="comfortable"
-              ></v-checkbox-btn><br>  
-          </v-checkbox-btn-group>  
-
-        </v-col>     
-      </v-row>
+  <!-- START ROW 1/2 (headline)-->
+  <v-row class="pa-2 ma-2">
+    <p>Detailansicht Aufgabe</p>
+  </v-row>
+  <v-row class="pa-2 ma-2">   
+    <h2 class="text-high-emphasis">Fehlerhaftes Produkt am Modul {{ this.task.module }}</h2>  
+  </v-row>
+  <!-- END ROW 1/2 -->
 
 
-      <v-row>
-        <v-col>
+  <!-- START ROW 2/2 (task)-->
+  <v-row class="pa-2 ma-2">
 
-        <h4>Weiterleiten an</h4>
-
-        <v-btn-toggle mandatory>      
-          <v-btn 
-            append-icon="mdi-leaf" 
-            variant="tonal" 
-            color="green"
-            @click="this.forwardTo='Reparatur'">
-            Reparatur
-          </v-btn>
-          <v-btn 
-            append-icon="mdi-help" 
+    <!-- START COLUMN 1/2 (image) (EDIT MODE) -->
+    <v-col v-if="task.assignedTo=='David Heik' && task.status!='erledigt'" sm="12" md="8">  
+      
+      <v-row class="pb-2 mb-2">
+      
+        <v-alert
+            type="warning"
+            color="primary"
             variant="tonal"
-            @click="this.forwardTo='unklar'">
-            unklar
-          </v-btn> 
-          <v-btn 
-            append-icon="mdi-delete" 
-            variant="tonal" 
-            color="red"
-            @click="this.forwardTo='Ausschuss'">
-            Ausschuss
-          </v-btn>   
-        </v-btn-toggle>
+            class="mt-2"
+            >
+            <span>{{ this.task.description }}</span>
 
-        </v-col>
+          </v-alert>
+
       </v-row>
-      <br>
+
+      <v-row class="mt-4">
+        <v-col sm="12" md="8">
+          
+          <v-img :src="getImgPath()"></v-img>   
+  
+          <p class="text-caption text-medium-emphasis text-right">Fehlerbild</p>
+        </v-col>
+
+        <v-col sm="12" md="4" class="fill-height">
+          <v-img
+            contain
+            :src="require('@/assets/images/carrier_reference3.png')"
+            class="text-center align-center"
+          >
+            <v-btn
+              color="primary"
+              icon="mdi-arrow-expand"
+              @click="overlay = !overlay"
+            ></v-btn>  
+          </v-img>
+          <p class="text-caption text-medium-emphasis text-right">Referenzbild</p>
+    
+        </v-col>
+        
+      </v-row>      
+
+      <v-overlay
+        v-model="overlay"
+        contained
+        class="align-center justify-center"
+      >
+        <v-btn
+          color="primary"
+          icon="mdi-close"
+          @click="overlay = false"
+        ></v-btn>
+        <v-img :src="require('@/assets/images/carrier_reference3.png')" :width="800"></v-img>   
+      </v-overlay>
 
       <v-row>
-        <v-col> 
-          <v-btn v-if="this.task.assignedTo=='David Heik' && this.task.status!='erledigt'" color="primary-darken-1" @click="this.sendTask()">
-            senden
-          </v-btn>
-          <v-btn v-else disabled color="primary-darken-1" @click="this.sendTask()">
-            senden
-          </v-btn>
+        <v-col class="d-flex"> 
           <v-snackbar
             v-model="snackbar"
           >
@@ -181,16 +152,161 @@ export default {
             </template>
           </v-snackbar>
         </v-col> 
-      </v-row>       
+      </v-row> 
+      
+      
+      <v-row>
+        <h4>Fehlerhafte Teile</h4>
+      </v-row>   
+      
+      <v-row>
+
+        <v-btn-toggle
+          v-model="errors"
+          borderless
+          multiple
+        >
+          <v-btn value="Sicherung links" size="large">                
+            <v-icon color="red-darken-1" icon="mdi-fuse-alert"></v-icon>
+            <v-icon color="grey-darken-4" icon="mdi-fuse"></v-icon>
+            Links
+          </v-btn>
+
+          <v-btn value="Sicherung rechts" size="large">                
+            <v-icon color="grey-darken-4" icon="mdi-fuse"></v-icon>
+            <v-icon color="red-darken-1" icon="mdi-fuse-alert"></v-icon>
+            Rechts
+          </v-btn>
+
+          <v-btn value="Platine" size="large">
+            <v-icon right>mdi-integrated-circuit-chip</v-icon>
+            Platine            
+          </v-btn>
+
+          <v-btn value="Sonstiger Fehler" size="large">
+            Sonstiges
+          </v-btn>
+        </v-btn-toggle>
+        
+      </v-row>
+
+      <v-row class="pt-4">
+        <h4>Weiterleitung an</h4>             
+      </v-row>
+
+      <v-row>
+        <v-btn-toggle mandatory>      
+          <v-btn 
+            prepend-icon="mdi-leaf" 
+            variant="text" 
+            color="green-darken-1"
+            size="large"
+            @click="this.forwardTo='Reparatur'">
+            Reparatur
+          </v-btn>
+          <v-btn 
+            prepend-icon="mdi-help" 
+            variant="text"
+            size="large"
+            @click="this.forwardTo='unklar'">
+            unklar
+          </v-btn> 
+          <v-btn 
+            prepend-icon="mdi-delete" 
+            variant="text" 
+            color="red-darken-1"
+            size="large"
+            @click="this.forwardTo='Ausschuss'">
+            Ausschuss
+          </v-btn>   
+        </v-btn-toggle>     
+
+      </v-row>
+
+      <v-row class="pt-8">  
+       
+        <v-btn          
+          v-if="this.task.assignedTo=='David Heik' && this.task.status!='erledigt'" 
+          color="primary-darken-1" 
+          @click="this.sendTask()">
+          senden
+        </v-btn>
+        <v-btn           
+          v-else 
+          disabled 
+          color="primary-darken-1">
+          senden
+        </v-btn>
+        
+      </v-row>
+
+    </v-col>
+    <!-- END COLUMN 1/2 -->
+
+
+    <!-- START COLUMN 1/2 (image) (VIEW MODE) -->
+    <v-col v-else sm="12" md="8">  
+      
+      <v-row class="pb-2 mb-2">
+      
+        <v-alert
+            type="warning"
+            color="primary"
+            variant="tonal"
+            class="mt-2"
+            >
+            <span>Diese Aufgabe können Sie nur ansehen.</span>
+
+          </v-alert>
+
+      </v-row>
+
+      <v-row class="mt-4">
+        <v-col sm="12" md="8">
+          
+          <v-img :src="getImgPath(12)"></v-img>    
+          <p class="text-caption text-medium-emphasis text-right">Fehlerbild</p>
+        </v-col>
+
+        <v-col sm="12" md="4" class="fill-height">
+          <v-img
+            contain
+            :src="require('@/assets/images/carrier_reference3.png')"
+            class="text-center align-center"
+          >
+            <v-btn
+              color="primary"
+              icon="mdi-arrow-expand"
+              @click="overlay = !overlay"
+            ></v-btn>  
+          </v-img>
+          <p class="text-caption text-medium-emphasis text-right">Referenzbild</p>
+    
+        </v-col>
+        
+      </v-row>      
+
+      <v-overlay
+        v-model="overlay"
+        contained
+        class="align-center justify-center"
+      >
+        <v-btn
+          color="primary"
+          icon="mdi-close"
+          @click="overlay = false"
+        ></v-btn>
+        <v-img :src="require('@/assets/images/carrier_reference3.png')" :width="800"></v-img>   
+      </v-overlay>
 
     </v-col>
     <!-- END COLUMN 1/2 -->
 
 
     <!-- START COLUMN 2/2 (meta) -->
-    <v-col xs="12" md="2 offset-1">
+    <v-col xs="12" md="3 offset-1">
           
-      <h4>Aufgabe</h4>       
+      <h4>Details</h4>       
       <p>{{ this.task.createdAt }}</p>      
       <p>ID: {{ this.task.id }}</p>
       <p>
@@ -209,13 +325,13 @@ export default {
         <span >ES</span>            
       </v-avatar>&nbsp;
        <span>{{ this.task.assignedTo }}</span>
- 
-    </v-col>
-    <!-- END COLUMN 2/2 -->
-      
-  </v-row> 
 
-    
+
+    </v-col>
+    <!-- END COLUMN 3/3 -->
+      
+  </v-row>  
+  <!-- END ROW 2/2 (task)-->   
 
 </v-container>
 
@@ -248,6 +364,11 @@ export default {
   left: 0;
 }
 
+.thumbnail {
+  background-image: url('@/assets/images/carrier_reference3.png');
+  background-size: contain;
+  height: 100%;
+}
 
 
 </style>

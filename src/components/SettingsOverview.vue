@@ -9,7 +9,6 @@ export default {
     return {
       darkMode: null,
       soundAlert: null,
-      healthConnected: null,
       settings
     }
   },
@@ -34,22 +33,12 @@ export default {
 
        settings.soundAlert = !settings.soundAlert;
        this.soundAlert = settings.soundAlert;
-
-        if(settings.soundAlert) {
+      
+        if(this.soundAlert) {
           this.playSound();
         } 
 
     },
-    toggleHealth () {
-
-      settings.healthConnected = !settings.healthConnected;
-      this.healthConnected = settings.healthConnected;
-
-      if(settings.soundAlert) {
-        this.playSound();
-      } 
-
-      }
   },
   mounted (){
 
@@ -66,9 +55,11 @@ export default {
 
 <template>
 
-<v-container fluid class="text-center">
+<v-container fluid>
+
+  <h1 class="text-high-emphasis">Settings</h1>
     
-  <v-row class="justify-center">  
+  <v-row>  
     <v-col xs="12" md="6" lg="2">
       
       <v-switch 
@@ -85,12 +76,12 @@ export default {
     </v-col>
   </v-row>
 
-  <v-row class="justify-center">
+  <v-row>
     <v-col xs="12" md="6" lg="2">
       <v-switch 
         @click="this.toggleSound" 
         color="primary" 
-        v-model="soundAlert"
+        v-model="this.soundAlert"
         label="">
         <template v-slot:label>      
           Ton&nbsp;
@@ -100,22 +91,6 @@ export default {
       </v-switch>
     </v-col>  
   </v-row>
-
-  <!-- <v-row class="justify-center">
-    <v-col xs="12" md="6" lg="2">
-      <v-switch 
-        @click="this.toggleHealth" 
-        color="primary" 
-        v-model="healthConnected"
-        label="">
-        <template v-slot:label>      
-          Smartwatch&nbsp;
-          <v-icon v-if="this.healthConnected" icon="mdi-watch-vibrate" class="smaller"></v-icon>
-          <v-icon v-else icon="mdi-watch-vibrate-off" class="smaller"></v-icon>            
-        </template>
-      </v-switch>
-    </v-col>  
-  </v-row> -->
 
 </v-container>
 

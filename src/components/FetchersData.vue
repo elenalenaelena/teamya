@@ -1,6 +1,6 @@
 <script>
 import TaskNotification from './TaskNotification.vue';
-import NoTaskNotification from './NoTaskNotification.vue';
+// import NoTaskNotification from './NoTaskNotification.vue';
 import { settings } from '../main.js'
 import { useApiStore } from '@/stores/ApiStore';
 
@@ -20,13 +20,22 @@ data() {
 },
 watch: {
     useApiStore: function(value) {
-            // If "pageData" ever changes, then we will console log its new value.
-            console.log(value);
+        // If "pageData" ever changes, then we will console log its new value.
+        console.log(value);
     }
 },
 components: {
     TaskNotification,
-    NoTaskNotification
+    // NoTaskNotification
+},
+computed: {
+    showReset() {
+        if(this.$route.path == "/tasks") {
+            return true
+        } else {
+            return false
+        }
+    }
 },
 methods: {
     createNotification(){
@@ -40,7 +49,7 @@ methods: {
         // check no of tasks
         let no_tasks = this.data.tasks.length;     
         
-        if (no_tasks < 8 ){
+        if (no_tasks < 50 ){
 
             let dateTime = this.getDateTime();
             let assignee = this.getAvailableUser();  
@@ -61,7 +70,7 @@ methods: {
                 assignedTo: assignee,
                 comments: [],
                 createdAt: dateTime,
-                description: "Bitte prüfen Sie die Ursache und leiten Sie das Produkt weiter.",               
+                description: "Bitte geben Sie an, welche Teile fehlerhaft sind und leiten Sie das Produkt weiter.",               
                 errorImg: errorImg,
                 errors: [],
                 forwardTo: "",
@@ -74,8 +83,11 @@ methods: {
             this.exampleSocket.send(JSON.stringify(this.task));   
 
              //create notification
-            this.latestTask = this.task.data;        
-            this.createNotification();  
+            this.latestTask = this.task.data;   
+            if(assignee=="David Heik"){
+                 this.createNotification();  
+            }     
+           
         }
 
         // clear interval
@@ -134,7 +146,19 @@ methods: {
         //send to socket
         this.exampleSocket.send(JSON.stringify(this.task));   
 
-    }
+    },
+    // unfortunately, data can only deleted one by one using an id
+    // see: https://www.npmjs.com/package/json-socket-server
+    deleteTasks(){
+        
+        this.data.tasks.forEach(t => {
+            this.exampleSocket.send(JSON.stringify({type: 'delete', path: 'tasks', id: t.id}));
+        });
+       
+    },
+},
+async mounted() {
+    //const route = useRoute();   
 },
 async created() {
 
@@ -176,8 +200,18 @@ setup() {
 <template>
 
     <TaskNotification v-if="alert" :latestTaskData="latestTask" />
-    <NoTaskNotification v-else />
+    <!-- <NoTaskNotification v-else /> -->
 
-    <router-view :apiData="data"></router-view>        
+    <router-view :apiData="data"></router-view>      
+
+    <div v-if="showReset" class="text-center">
+        <v-btn 
+            @click="deleteTasks"
+            color="warning"
+        >
+            Reset (Alle löschen)
+        </v-btn>
+    </div>
+    
 
 </template>

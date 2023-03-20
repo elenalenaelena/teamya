@@ -15,7 +15,6 @@ export default {
   },
   computed: {
   isDetailPage() {
-    console.log("hide arrow")
      return this.$route.name == 'TaskDetail'}
   },
   methods: {

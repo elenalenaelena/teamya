@@ -61,7 +61,11 @@ export const useApiStore = defineStore('ApiStore', {
           this.apiData.tasks[index] = obj; // modify
         }
         console.log(obj)
-    }
-    //deleteTask
+      },
+      deleteTask(i){
+        //const index = this.apiData.tasks.findIndex((e) => e.id === obj.id);
+        const index = this.apiData.tasks.findIndex(i);
+        this.apiData.tasks.splice(index);
+      }
     }
   })

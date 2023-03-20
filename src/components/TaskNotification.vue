@@ -22,11 +22,15 @@ export default {
   <v-alert  v-if="latestTaskData"
       type="warning" 
       title="Neue Aufgabe"
+      density="comfortable"
       closable
   >
-      <div>Modul: {{ latestTaskData.module }}</div>
-      <v-btn @click="showTaskDetail()" color="white">
-        jetzt durchführen
+      <div>Prüfung fehlerhaftes Produkt an {{ latestTaskData.module }}</div>
+      <v-btn 
+        @click="showTaskDetail()" 
+        color="white" 
+      >
+        bearbeiten
       </v-btn>
   </v-alert> 
 
