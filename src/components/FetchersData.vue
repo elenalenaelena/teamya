@@ -53,7 +53,8 @@ methods: {
 
             let dateTime = this.getDateTime();
             let assignee = this.getAvailableUser();  
-            let errorImg = this.getError();   
+            // let errorImg = this.getError();  
+            let errorImg = 12;
             
             if(no_tasks == 0)
                this.id = 0;

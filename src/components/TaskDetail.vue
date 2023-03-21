@@ -13,10 +13,15 @@ export default {
         errors: [],
         forwardTo: "",
         snackbar: false,
-        overlay: false
+        overlay: false,
+        no_error: false,
     }
   },
   methods: {
+    setNoErr(){
+      this.no_error=!this.no_error;
+      (this.no_error) ? this.forwardTo="Produktion" : "";
+    },
     sendTask () {
       this.snackbar = true
 
@@ -32,6 +37,8 @@ export default {
           this.task.status = 'erledigt'; break;
         case("unklar"): 
           this.task.status = 'Klärung erforderlich'; break;
+        case("Produktion"): 
+          this.task.status = 'erledigt'; break;
         case("Ausschuss"): 
           this.task.status = 'erledigt'; break;
         default: 
@@ -67,11 +74,8 @@ export default {
 <v-container fluid>
 
   <!-- START ROW 1/2 (headline)-->
-  <v-row class="pa-2 ma-2">
-    <p>Detailansicht Aufgabe</p>
-  </v-row>
   <v-row class="pa-2 ma-2">   
-    <h2 class="text-high-emphasis">Fehlerhaftes Produkt am Modul {{ this.task.module }}</h2>  
+    <h2 class="text-high-emphasis">Prüfung fehlerhaftes Produkt</h2>  
   </v-row>
   <!-- END ROW 1/2 -->
 
@@ -97,14 +101,13 @@ export default {
       </v-row>
 
       <v-row class="mt-4">
-        <v-col sm="12" md="8">
-          
-          <v-img :src="getImgPath()"></v-img>   
-  
-          <p class="text-caption text-medium-emphasis text-right">Fehlerbild</p>
+        <v-col sm="12" md="6">
+          <p class="text-caption text-medium-emphasis">Fehlerbild</p>
+          <v-img :src="getImgPath()"></v-img>            
         </v-col>
 
-        <v-col sm="12" md="4" class="fill-height">
+        <v-col sm="12" md="6" class="fill-height">
+          <p class="text-caption text-medium-emphasis">Referenzbild</p>
           <v-img
             contain
             :src="require('@/assets/images/carrier_reference3.png')"
@@ -116,8 +119,7 @@ export default {
               @click="overlay = !overlay"
             ></v-btn>  
           </v-img>
-          <p class="text-caption text-medium-emphasis text-right">Referenzbild</p>
-    
+         
         </v-col>
         
       </v-row>      
@@ -125,11 +127,12 @@ export default {
       <v-overlay
         v-model="overlay"
         contained
-        class="align-center justify-center"
+        class="align-center justify-center text-right"
       >
         <v-btn
           color="primary"
           icon="mdi-close"
+          class="mb-4"
           @click="overlay = false"
         ></v-btn>
         <v-img :src="require('@/assets/images/carrier_reference3.png')" :width="800"></v-img>   
@@ -165,28 +168,33 @@ export default {
           v-model="errors"
           borderless
           multiple
+          :disabled="no_error"
         >
-          <v-btn value="Sicherung links" size="large">                
+          <v-btn value="Sicherung links" size="large" variant="text" >                
             <v-icon color="red-darken-1" icon="mdi-fuse-alert"></v-icon>
             <v-icon color="grey-darken-4" icon="mdi-fuse"></v-icon>
             Links
           </v-btn>
 
-          <v-btn value="Sicherung rechts" size="large">                
+          <v-btn value="Sicherung rechts" size="large" variant="text" >                
             <v-icon color="grey-darken-4" icon="mdi-fuse"></v-icon>
             <v-icon color="red-darken-1" icon="mdi-fuse-alert"></v-icon>
             Rechts
           </v-btn>
 
-          <v-btn value="Platine" size="large">
+          <v-btn value="Platine" size="large" variant="text" >
             <v-icon right>mdi-integrated-circuit-chip</v-icon>
             Platine            
           </v-btn>
 
-          <v-btn value="Sonstiger Fehler" size="large">
+          <v-btn value="Sonstiger Fehler" size="large" variant="text" >
             Sonstiges
           </v-btn>
         </v-btn-toggle>
+
+        <v-btn value="Keine" size="large" variant="text" @click="this.setNoErr()" >
+            Keine
+        </v-btn>
         
       </v-row>
 
@@ -195,7 +203,7 @@ export default {
       </v-row>
 
       <v-row>
-        <v-btn-toggle mandatory>      
+        <v-btn-toggle mandatory :disabled="no_error">      
           <v-btn 
             prepend-icon="mdi-leaf" 
             variant="text" 
@@ -210,7 +218,7 @@ export default {
             size="large"
             @click="this.forwardTo='unklar'">
             unklar
-          </v-btn> 
+          </v-btn>
           <v-btn 
             prepend-icon="mdi-delete" 
             variant="text" 
@@ -262,13 +270,13 @@ export default {
       </v-row>
 
       <v-row class="mt-4">
-        <v-col sm="12" md="8">
-          
-          <v-img :src="getImgPath(12)"></v-img>    
+        <v-col sm="12" md="6">
           <p class="text-caption text-medium-emphasis text-right">Fehlerbild</p>
+          <v-img :src="getImgPath(12)"></v-img>             
         </v-col>
 
-        <v-col sm="12" md="4" class="fill-height">
+        <v-col sm="12" md="6" class="fill-height">
+          <p class="text-caption text-medium-emphasis text-right">Referenzbild</p>
           <v-img
             contain
             :src="require('@/assets/images/carrier_reference3.png')"
@@ -280,7 +288,7 @@ export default {
               @click="overlay = !overlay"
             ></v-btn>  
           </v-img>
-          <p class="text-caption text-medium-emphasis text-right">Referenzbild</p>
+          
     
         </v-col>
         
@@ -289,11 +297,12 @@ export default {
       <v-overlay
         v-model="overlay"
         contained
-        class="align-center justify-center"
+        class="align-center justify-center text-right"
       >
         <v-btn
           color="primary"
           icon="mdi-close"
+          class="mb-4"
           @click="overlay = false"
         ></v-btn>
         <v-img :src="require('@/assets/images/carrier_reference3.png')" :width="800"></v-img>   
@@ -309,6 +318,7 @@ export default {
       <h4>Details</h4>       
       <p>{{ this.task.createdAt }}</p>      
       <p>ID: {{ this.task.id }}</p>
+      <p>Modul: {{ this.task.module }}</p>
       <p>
         Status: 
         <v-btn variant="plain">{{ this.task.status }}
